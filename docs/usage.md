@@ -125,9 +125,9 @@ const result = await client.request(
       name: 'speak',
       arguments: {
         text: 'こんにちは、世界！',
-        speaker: 1
-      }
-    }
+        speaker: 1,
+      },
+    },
   },
   {}
 );
@@ -167,6 +167,7 @@ curl http://localhost:50021/speakers | jq '.[].styles[].id'
 ```
 
 よく使用される話者ID：
+
 - 1: 四国めたん（ノーマル）
 - 3: 四国めたん（ツンツン）
 - 8: 春日部つむぎ（ノーマル）

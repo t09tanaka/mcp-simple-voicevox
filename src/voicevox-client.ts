@@ -16,7 +16,11 @@ export class VoicevoxClient {
     });
   }
 
-  async speak(text: string, speaker: number, speedScale?: number): Promise<void> {
+  async speak(
+    text: string,
+    speaker: number,
+    speedScale?: number
+  ): Promise<void> {
     try {
       // 音声クエリの作成
       const queryResponse = await this.client.post('/audio_query', null, {
@@ -34,21 +38,29 @@ export class VoicevoxClient {
       }
 
       // 音声合成
-      const synthesisResponse = await this.client.post('/synthesis', audioQuery, {
-        params: {
-          speaker,
-        },
-        responseType: 'arraybuffer',
-      });
+      const synthesisResponse = await this.client.post(
+        '/synthesis',
+        audioQuery,
+        {
+          params: {
+            speaker,
+          },
+          responseType: 'arraybuffer',
+        }
+      );
 
       // 音声データの再生（一時的に音声ファイルとして保存して再生）
       await this.playAudio(synthesisResponse.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.code === 'ECONNREFUSED') {
-          throw new Error('VOICEVOXエンジンに接続できません。VOICEVOXが起動しているか確認してください。');
+          throw new Error(
+            'VOICEVOXエンジンに接続できません。VOICEVOXが起動しているか確認してください。'
+          );
         }
-        throw new Error(`VOICEVOX APIエラー: ${error.response?.status} ${error.response?.statusText}`);
+        throw new Error(
+          `VOICEVOX APIエラー: ${error.response?.status} ${error.response?.statusText}`
+        );
       }
       throw error;
     }
@@ -62,7 +74,7 @@ export class VoicevoxClient {
 
     return new Promise((resolve, reject) => {
       const tempFilePath = path.join(os.tmpdir(), `voicevox_${Date.now()}.wav`);
-      
+
       // 音声データを一時ファイルに保存
       fs.writeFileSync(tempFilePath, Buffer.from(audioData));
 
@@ -81,11 +93,18 @@ export class VoicevoxClient {
           break;
         case 'win32': // Windows
           command = 'powershell';
-          args = ['-c', `(New-Object Media.SoundPlayer "${tempFilePath}").PlaySync()`];
+          args = [
+            '-c',
+            `(New-Object Media.SoundPlayer "${tempFilePath}").PlaySync()`,
+          ];
           break;
         default:
           fs.unlinkSync(tempFilePath);
-          reject(new Error(`サポートされていないプラットフォーム: ${process.platform}`));
+          reject(
+            new Error(
+              `サポートされていないプラットフォーム: ${process.platform}`
+            )
+          );
           return;
       }
 
@@ -125,9 +144,13 @@ export class VoicevoxClient {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.code === 'ECONNREFUSED') {
-          throw new Error('VOICEVOXエンジンに接続できません。VOICEVOXが起動しているか確認してください。');
+          throw new Error(
+            'VOICEVOXエンジンに接続できません。VOICEVOXが起動しているか確認してください。'
+          );
         }
-        throw new Error(`VOICEVOX APIエラー: ${error.response?.status} ${error.response?.statusText}`);
+        throw new Error(
+          `VOICEVOX APIエラー: ${error.response?.status} ${error.response?.statusText}`
+        );
       }
       throw error;
     }

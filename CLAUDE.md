@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 プロジェクトは.gitignore設定に基づきNode.jsを使用します。プロジェクト構造が確立されると、一般的なコマンドは以下になる予定です：
 
 - `npm install` - 依存関係のインストール
-- `npm run build` - プロジェクトのビルド  
+- `npm run build` - プロジェクトのビルド
 - `npm run dev` - 開発モード
 - `npm test` - テストの実行
 - `npm link` - ローカルnpxリンクの作成
@@ -41,4 +41,4 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 音声通知の設定: speaker=1, speedScale=1.3
 - 英単語は適切にカタカナに変換してVOICEVOXに送信してください
 
-*注記：このCLAUDE.mdはプロジェクト構造とコードベースの開発に伴って更新されます。*
+_注記：このCLAUDE.mdはプロジェクト構造とコードベースの開発に伴って更新されます。_
