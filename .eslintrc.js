@@ -7,7 +7,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
-    '@typescript-eslint/recommended',
   ],
   rules: {
     '@typescript-eslint/no-unused-vars': 'error',

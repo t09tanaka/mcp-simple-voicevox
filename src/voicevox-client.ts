@@ -112,7 +112,7 @@ export class VoicevoxClient {
     });
   }
 
-  async getSpeakers(): Promise<any[]> {
+  async getSpeakers(): Promise<unknown[]> {
     try {
       const response = await this.client.get('/speakers');
       return response.data;
