@@ -37,7 +37,9 @@ npm start
 
 ### MCPクライアントから利用
 
-MCPクライアント（Claude Code等）で以下のツールが利用できます：
+MCPクライアント（Claude Code等）で以下のツールが利用できます。
+
+**設定方法の詳細は [docs/usage.md](docs/usage.md) を参照してください。**
 
 #### `speak` ツール
 
