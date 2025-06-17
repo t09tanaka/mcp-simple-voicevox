@@ -31,8 +31,18 @@ npm run build
 
 ### MCPサーバーとして起動
 
+#### 方法1: 直接実行
 ```bash
 npm start
+```
+
+#### 方法2: npxコマンド（ローカルリンク後）
+```bash
+# 初回のみ：ローカルリンクを作成
+npm link
+
+# 以降はnpxで実行可能
+npx mcp-voicevox
 ```
 
 ### MCPクライアントから利用

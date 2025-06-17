@@ -6,9 +6,24 @@
 
 Claude CodeでMCP-VOICEVOXサーバーを使用するには、設定ファイルに追加する必要があります。
 
-#### macOS/Linux の場合
+#### 方法1: npxを使用（推奨）
 
 `~/.claude_desktop/config.json` ファイルを編集：
+
+```json
+{
+  "mcpServers": {
+    "voicevox": {
+      "command": "npx",
+      "args": ["mcp-voicevox"]
+    }
+  }
+}
+```
+
+#### 方法2: 直接パス指定
+
+##### macOS/Linux の場合
 
 ```json
 {
@@ -21,9 +36,7 @@ Claude CodeでMCP-VOICEVOXサーバーを使用するには、設定ファイル
 }
 ```
 
-#### Windows の場合
-
-`%APPDATA%\Claude\config.json` ファイルを編集：
+##### Windows の場合
 
 ```json
 {
@@ -40,7 +53,8 @@ Claude CodeでMCP-VOICEVOXサーバーを使用するには、設定ファイル
 
 - VOICEVOXエンジンが起動している（`http://localhost:50021`）
 - Node.js がインストールされている
-- mcp-voicevoxプロジェクトがビルド済み（`npm run build`）
+- **方法1の場合**: プロジェクトで `npm link` が実行済み
+- **方法2の場合**: mcp-voicevoxプロジェクトがビルド済み（`npm run build`）
 
 ### 3. Claude Codeでの使用
 
