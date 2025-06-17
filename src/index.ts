@@ -96,6 +96,17 @@ class VoicevoxMCPServer {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
     console.error('MCP VOICEVOX Server running on stdio');
+    
+    // プロセス終了時の処理
+    process.on('SIGINT', () => {
+      console.error('Received SIGINT, shutting down...');
+      process.exit(0);
+    });
+    
+    process.on('SIGTERM', () => {
+      console.error('Received SIGTERM, shutting down...');
+      process.exit(0);
+    });
   }
 }
 
@@ -104,9 +115,8 @@ async function main() {
   await server.run();
 }
 
-if (require.main === module) {
-  main().catch((error) => {
-    console.error('Server error:', error);
-    process.exit(1);
-  });
-}
+// メインモジュールとして実行された場合
+main().catch((error) => {
+  console.error('Server error:', error);
+  process.exit(1);
+});

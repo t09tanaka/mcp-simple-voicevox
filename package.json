@@ -2,9 +2,10 @@
   "name": "@t09tanaka/mcp-simple-voicevox",
   "version": "0.1.0",
   "description": "MCP server for VOICEVOX text-to-speech integration",
+  "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "mcp-simple-voicevox": "dist/index.js"
+    "mcp-simple-voicevox": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
