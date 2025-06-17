@@ -1,24 +1,23 @@
 # @t09tanaka/mcp-simple-voicevox
 
-MCP (Model Context Protocol) を通じてVOICEVOXのテキスト読み上げ機能を提供するシンプルなサーバーです。
+MCP (Model Context Protocol) を通じて VOICEVOX のテキスト読み上げ機能を提供するシンプルなサーバーです。
 
 ## 概要
 
-このプロジェクトは、VOICEVOXの音声合成エンジンをMCPツールとして利用できるようにするサーバー実装です。Claude Code等のMCPクライアントから、テキストの読み上げ機能を簡単に利用できます。
+このプロジェクトは、VOICEVOX の音声合成エンジンを MCP ツールとして利用できるようにするサーバー実装です。Claude Code 等の MCP クライアントから、テキストの読み上げ機能を簡単に利用できます。
 
 ## 前提条件
 
 - Node.js 18.0.0 以上
-- **VOICEVOXエンジンが起動している必要があります**
-  - [VOICEVOX公式サイト](https://voicevox.hiroshiba.jp/)からVOICEVOXをダウンロード・インストール
-  - VOICEVOXを起動し、エンジンが `http://localhost:50021` で稼働していることを確認
+- **VOICEVOX エンジンが起動している必要があります**
+  - [VOICEVOX 公式サイト](https://voicevox.hiroshiba.jp/)から VOICEVOX をダウンロード・インストール
+  - VOICEVOX を起動し、エンジンが `http://localhost:50021` で稼働していることを確認
 
 ## インストール
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/your-username/mcp-voicevox.git
-cd mcp-voicevox
+git clone https://github.com/t09tanaka/mcp-simple-voicevox.git
 
 # 依存関係をインストール
 npm install
@@ -29,14 +28,16 @@ npm run build
 
 ## 使用方法
 
-### MCPサーバーとして起動
+### MCP サーバーとして起動
 
-#### 方法1: 直接実行
+#### 方法 1: 直接実行
+
 ```bash
 npm start
 ```
 
-#### 方法2: npxコマンド（ローカルリンク後）
+#### 方法 2: npx コマンド（ローカルリンク後）
+
 ```bash
 # 初回のみ：ローカルリンクを作成
 npm link
@@ -45,9 +46,9 @@ npm link
 npx @t09tanaka/mcp-simple-voicevox
 ```
 
-### MCPクライアントから利用
+### MCP クライアントから利用
 
-MCPクライアント（Claude Code等）で以下のツールが利用できます。
+MCP クライアント（Claude Code 等）で以下のツールが利用できます。
 
 **設定方法の詳細は [docs/usage.md](docs/usage.md) を参照してください。**
 
@@ -56,28 +57,33 @@ MCPクライアント（Claude Code等）で以下のツールが利用できま
 テキストを音声で読み上げます。
 
 **パラメータ:**
+
 - `text` (string, 必須): 読み上げるテキスト
-- `speaker` (number, 必須): 話者ID
+- `speaker` (number, 必須): 話者 ID
+- `speedScale` (number, オプション): 読み上げ速度のスケール（0.5〜2.0、デフォルト: 1.0）
 
 **使用例:**
+
 ```json
 {
   \"text\": \"こんにちは、これはテスト音声です。\",
-  \"speaker\": 1
+  \"speaker\": 1,
+  \"speedScale\": 1.3
 }
 ```
 
-### 話者IDについて
+### 話者 ID について
 
-VOICEVOXで利用可能な話者IDは、VOICEVOXエンジンの `/speakers` エンドポイントから取得できます：
+VOICEVOX で利用可能な話者 ID は、VOICEVOX エンジンの `/speakers` エンドポイントから取得できます：
 
 ```bash
 curl http://localhost:50021/speakers
 ```
 
-一般的な話者ID（参考）：
+一般的な話者 ID（参考）：
+
 - 1: 四国めたん（ノーマル）
-- 2: 四国めたん（あまあま）  
+- 2: 四国めたん（あまあま）
 - 3: 四国めたん（ツンツン）
 - 8: 春日部つむぎ（ノーマル）
 - 10: 雨晴はう（ノーマル）
@@ -107,15 +113,15 @@ npm test
 音声再生は以下のプラットフォームに対応しています：
 
 - **macOS**: `afplay` コマンドを使用
-- **Linux**: `aplay` コマンドを使用  
+- **Linux**: `aplay` コマンドを使用
 - **Windows**: PowerShell の `Media.SoundPlayer` を使用
 
 ## トラブルシューティング
 
-### VOICEVOXエンジンに接続できない
+### VOICEVOX エンジンに接続できない
 
-- VOICEVOXアプリケーションが起動しているか確認
-- `http://localhost:50021` でVOICEVOX APIが利用可能か確認
+- VOICEVOX アプリケーションが起動しているか確認
+- `http://localhost:50021` で VOICEVOX API が利用可能か確認
 - ファイアウォールの設定を確認
 
 ### 音声が再生されない
