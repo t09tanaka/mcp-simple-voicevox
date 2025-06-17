@@ -15,7 +15,7 @@ Claude CodeでMCP-VOICEVOXサーバーを使用するには、設定ファイル
   "mcpServers": {
     "voicevox": {
       "command": "npx",
-      "args": ["mcp-voicevox"]
+      "args": ["@t09tanaka/mcp-simple-voicevox"]
     }
   }
 }

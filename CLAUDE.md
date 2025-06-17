@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-これはVOICEVOX統合のためのMCP（Model Context Protocol）サーバー実装プロジェクトです。現在は初期セットアップ段階にあります。
+これは `@t09tanaka/mcp-simple-voicevox` として提供される、VOICEVOX統合のためのMCP（Model Context Protocol）サーバー実装プロジェクトです。
 
 ## 開発環境セットアップ
 
@@ -14,6 +14,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build` - プロジェクトのビルド  
 - `npm run dev` - 開発モード
 - `npm test` - テストの実行
+- `npm link` - ローカルnpxリンクの作成
+- `npx @t09tanaka/mcp-simple-voicevox` - サーバーの実行
 
 ## アーキテクチャ
 

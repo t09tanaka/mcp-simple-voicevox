@@ -1,6 +1,6 @@
-# MCP-VOICEVOX
+# @t09tanaka/mcp-simple-voicevox
 
-MCP (Model Context Protocol) を通じてVOICEVOXのテキスト読み上げ機能を提供するサーバーです。
+MCP (Model Context Protocol) を通じてVOICEVOXのテキスト読み上げ機能を提供するシンプルなサーバーです。
 
 ## 概要
 
@@ -42,7 +42,7 @@ npm start
 npm link
 
 # 以降はnpxで実行可能
-npx mcp-voicevox
+npx @t09tanaka/mcp-simple-voicevox
 ```
 
 ### MCPクライアントから利用
