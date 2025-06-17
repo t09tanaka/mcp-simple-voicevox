@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-} from '@modelcontextprotocol/sdk/types.js';
-import { VoicevoxClient } from './voicevox-client.js';
+} from "@modelcontextprotocol/sdk/types.js";
+import { VoicevoxClient } from "./voicevox-client.js";
 
-const VOICEVOX_ENDPOINT = 'http://localhost:50021';
+const VOICEVOX_ENDPOINT = "http://localhost:50021";
 
 class VoicevoxMCPServer {
   private server: Server;
@@ -17,8 +17,8 @@ class VoicevoxMCPServer {
   constructor() {
     this.server = new Server(
       {
-        name: 'mcp-voicevox',
-        version: '0.1.0',
+        name: "mcp-voicevox",
+        version: "0.1.0",
       },
       {
         capabilities: {
@@ -36,21 +36,27 @@ class VoicevoxMCPServer {
       return {
         tools: [
           {
-            name: 'speak',
-            description: 'VOICEVOXを使用してテキストを読み上げます',
+            name: "speak",
+            description: "VOICEVOXを使用してテキストを読み上げます",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 text: {
-                  type: 'string',
-                  description: '読み上げるテキスト',
+                  type: "string",
+                  description: "読み上げるテキスト",
                 },
                 speaker: {
-                  type: 'number',
-                  description: '話者ID（VOICEVOXの話者番号）',
+                  type: "number",
+                  description: "話者ID（VOICEVOXの話者番号）",
+                },
+                speedScale: {
+                  type: "number",
+                  description: "読み上げ速度のスケール（デフォルト1.0）",
+                  minimum: 0.5,
+                  maximum: 2.0,
                 },
               },
-              required: ['text', 'speaker'],
+              required: ["text", "speaker"],
             },
           },
         ],
@@ -58,20 +64,21 @@ class VoicevoxMCPServer {
     });
 
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-      if (request.params.name === 'speak') {
+      if (request.params.name === "speak") {
         try {
-          const { text, speaker } = request.params.arguments as {
+          const { text, speaker, speedScale } = request.params.arguments as {
             text: string;
             speaker: number;
+            speedScale?: number;
           };
 
-          await this.voicevoxClient.speak(text, speaker);
+          await this.voicevoxClient.speak(text, speaker, speedScale);
 
           return {
             content: [
               {
-                type: 'text',
-                text: '音声の読み上げが完了しました',
+                type: "text",
+                text: "音声の読み上げが完了しました",
               },
             ],
           };
@@ -79,8 +86,10 @@ class VoicevoxMCPServer {
           return {
             content: [
               {
-                type: 'text',
-                text: `エラー: ${error instanceof Error ? error.message : '不明なエラー'}`,
+                type: "text",
+                text: `エラー: ${
+                  error instanceof Error ? error.message : "不明なエラー"
+                }`,
               },
             ],
             isError: true,
@@ -95,16 +104,16 @@ class VoicevoxMCPServer {
   async run() {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error('MCP VOICEVOX Server running on stdio');
-    
+    console.error("MCP VOICEVOX Server running on stdio");
+
     // プロセス終了時の処理
-    process.on('SIGINT', () => {
-      console.error('Received SIGINT, shutting down...');
+    process.on("SIGINT", () => {
+      console.error("Received SIGINT, shutting down...");
       process.exit(0);
     });
-    
-    process.on('SIGTERM', () => {
-      console.error('Received SIGTERM, shutting down...');
+
+    process.on("SIGTERM", () => {
+      console.error("Received SIGTERM, shutting down...");
       process.exit(0);
     });
   }
@@ -117,6 +126,6 @@ async function main() {
 
 // メインモジュールとして実行された場合
 main().catch((error) => {
-  console.error('Server error:', error);
+  console.error("Server error:", error);
   process.exit(1);
 });

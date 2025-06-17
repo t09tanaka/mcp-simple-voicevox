@@ -3,6 +3,7 @@ import axios, { AxiosInstance } from 'axios';
 export interface SpeakOptions {
   text: string;
   speaker: number;
+  speedScale?: number;
 }
 
 export class VoicevoxClient {
@@ -15,7 +16,7 @@ export class VoicevoxClient {
     });
   }
 
-  async speak(text: string, speaker: number): Promise<void> {
+  async speak(text: string, speaker: number, speedScale?: number): Promise<void> {
     try {
       // 音声クエリの作成
       const queryResponse = await this.client.post('/audio_query', null, {
@@ -26,6 +27,11 @@ export class VoicevoxClient {
       });
 
       const audioQuery = queryResponse.data;
+
+      // 速度スケールが指定されている場合は設定
+      if (speedScale !== undefined) {
+        audioQuery.speedScale = speedScale;
+      }
 
       // 音声合成
       const synthesisResponse = await this.client.post('/synthesis', audioQuery, {
