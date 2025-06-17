@@ -35,4 +35,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 機能追加、バグ修正、リファクタリングなど、変更の性質に応じて適切に分割します
 - コミットメッセージは変更内容を明確に説明し、なぜその変更が必要だったかを記述します
 
+## 音声通知設定
+
+- タスク完了時や重要なお知らせが必要な場合は、VOICEVOXの音声通知機能を使用してください
+- 音声通知の設定: speaker=1, speedScale=1.3
+- 英単語は適切にカタカナに変換してVOICEVOXに送信してください
+
 *注記：このCLAUDE.mdはプロジェクト構造とコードベースの開発に伴って更新されます。*
