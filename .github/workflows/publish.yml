@@ -6,6 +6,12 @@ on:
       - 'v*'
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish (e.g., v0.1.0)'
+        required: true
+        type: string
 
 jobs:
   publish:
@@ -15,8 +21,16 @@ jobs:
       id-token: write
 
     steps:
+      - name: Debug info
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Tag input: ${{ github.event.inputs.tag }}"
+
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
 
       - name: Use Node.js 20.x
         uses: actions/setup-node@v4
