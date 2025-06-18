@@ -1,0 +1,30 @@
+# Source files
+src/
+tests/
+docs/
+
+# Configuration files
+tsconfig.json
+jest.config.js
+.eslintrc.*
+.prettierrc*
+CLAUDE.md
+
+# Build tools
+node_modules/
+coverage/
+
+# Development files
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+# Git
+.git/
+.github/
+.gitignore
+
+# Temporary files
+*.tmp
+*.temp

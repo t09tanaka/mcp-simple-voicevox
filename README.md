@@ -15,6 +15,14 @@ MCP (Model Context Protocol) を通じて VOICEVOX のテキスト読み上げ�
 
 ## インストール
 
+### npm からインストール（推奨）
+
+```bash
+npm install -g @t09tanaka/mcp-simple-voicevox
+```
+
+### ソースからインストール
+
 ```bash
 # リポジトリをクローン
 git clone https://github.com/t09tanaka/mcp-simple-voicevox.git
@@ -24,26 +32,30 @@ npm install
 
 # ビルド
 npm run build
+
+# グローバルリンク（オプション）
+npm link
 ```
 
 ## 使用方法
 
 ### MCP サーバーとして起動
 
-#### 方法 1: 直接実行
+#### 方法 1: npm パッケージから実行（推奨）
 
 ```bash
-npm start
+# グローバルインストール後
+mcp-simple-voicevox
+
+# または npx で直接実行
+npx @t09tanaka/mcp-simple-voicevox
 ```
 
-#### 方法 2: npx コマンド（ローカルリンク後）
+#### 方法 2: ソースから直接実行
 
 ```bash
-# 初回のみ：ローカルリンクを作成
-npm link
-
-# 以降はnpxで実行可能
-npx @t09tanaka/mcp-simple-voicevox
+# プロジェクトディレクトリで
+npm start
 ```
 
 ### MCP クライアントから利用
