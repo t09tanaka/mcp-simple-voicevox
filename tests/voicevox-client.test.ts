@@ -20,9 +20,9 @@ describe('VoicevoxClient', () => {
       const options = {
         text: 'テスト',
         speaker: 1,
-        speedScale: 1.0
+        speedScale: 1.0,
       };
-      
+
       expect(typeof options.text).toBe('string');
       expect(typeof options.speaker).toBe('number');
       expect(typeof options.speedScale).toBe('number');

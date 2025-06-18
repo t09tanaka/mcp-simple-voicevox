@@ -1,0 +1,12 @@
+# Claude Code settings (exclude from formatting)
+.claude/
+
+# Build output
+dist/
+coverage/
+
+# Dependencies
+node_modules/
+
+# Generated files
+package-lock.json
