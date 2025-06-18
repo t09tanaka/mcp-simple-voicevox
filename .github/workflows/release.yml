@@ -4,9 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to release (e.g., 1.0.0)'
-        required: true
+        description: 'Version to release (e.g., 1.0.0) or leave empty for auto-increment'
+        required: false
         type: string
+      version_type:
+        description: 'Auto-increment type (if version is empty)'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
       release_type:
         description: 'Type of release'
         required: true
@@ -42,7 +51,26 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Update version in package.json
+      - name: Determine version
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            NEW_VERSION="${{ github.event.inputs.version }}"
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            if [ "$CURRENT_VERSION" = "$NEW_VERSION" ]; then
+              echo "Error: Version $NEW_VERSION already exists in package.json"
+              exit 1
+            fi
+            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          else
+            # Auto-increment version
+            npm version ${{ github.event.inputs.version_type }} --no-git-tag-version
+            NEW_VERSION=$(node -p "require('./package.json').version")
+            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update version in package.json (manual version)
+        if: github.event.inputs.version != ''
         run: npm version ${{ github.event.inputs.version }} --no-git-tag-version
 
       - name: Create git tag
@@ -50,10 +78,10 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add package.json package-lock.json
-          git commit -m "chore: bump version to v${{ github.event.inputs.version }}"
-          git tag v${{ github.event.inputs.version }}
+          git commit -m "chore: bump version to v${{ steps.version.outputs.version }}"
+          git tag v${{ steps.version.outputs.version }}
           git push origin main
-          git push origin v${{ github.event.inputs.version }}
+          git push origin v${{ steps.version.outputs.version }}
 
       - name: Generate changelog
         id: changelog
@@ -70,8 +98,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ github.event.inputs.version }}
-          release_name: v${{ github.event.inputs.version }}
+          tag_name: v${{ steps.version.outputs.version }}
+          release_name: v${{ steps.version.outputs.version }}
           body: ${{ steps.changelog.outputs.CHANGELOG }}
           draft: false
           prerelease: ${{ github.event.inputs.release_type == 'prerelease' }}
