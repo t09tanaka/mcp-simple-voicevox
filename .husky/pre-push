@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "🔍 Running pre-push checks..."
+npm run lint && npm test && npm run build
+echo "✅ All checks passed!"
