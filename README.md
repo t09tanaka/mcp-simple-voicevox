@@ -12,6 +12,7 @@ MCP (Model Context Protocol) を通じて VOICEVOX のテキスト読み上げ�
 - **VOICEVOX エンジンが起動している必要があります**
   - [VOICEVOX 公式サイト](https://voicevox.hiroshiba.jp/)から VOICEVOX をダウンロード・インストール
   - VOICEVOX を起動し、エンジンが `http://localhost:50021` で稼働していることを確認
+  - 別のホストで稼働している VOICEVOX エンジンを使用する場合は、環境変数 `VOICEVOX_API_URL` でエンドポイントを指定できます（例: `http://your-server:50021`）
 
 ## インストール
 
@@ -61,6 +62,16 @@ npm start
 ### MCP クライアントから利用
 
 MCP クライアント（Claude Code 等）で以下のツールが利用できます。
+
+#### Claude Code での設定例
+
+```bash
+# 基本（ローカルの VOICEVOX エンジンを使用）
+claude mcp add voicevox -- npx @t09tanaka/mcp-simple-voicevox
+
+# リモートの VOICEVOX エンジンを使用する場合
+claude mcp add voicevox -e VOICEVOX_API_URL=http://your-server:50021 -- npx @t09tanaka/mcp-simple-voicevox
+```
 
 **設定方法の詳細は [docs/usage.md](docs/usage.md) を参照してください。**
 
@@ -134,6 +145,7 @@ npm test
 
 - VOICEVOX アプリケーションが起動しているか確認
 - `http://localhost:50021` で VOICEVOX API が利用可能か確認
+- `VOICEVOX_API_URL` を設定している場合は、指定したエンドポイントが正しいか確認
 - ファイアウォールの設定を確認
 
 ### 音声が再生されない
