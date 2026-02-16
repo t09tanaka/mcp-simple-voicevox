@@ -21,6 +21,31 @@ Claude CodeでMCP-VOICEVOXサーバーを使用するには、設定ファイル
 }
 ```
 
+リモートの VOICEVOX エンジンを使用する場合は、`env` で `VOICEVOX_API_URL` を指定します：
+
+```json
+{
+  "mcpServers": {
+    "voicevox": {
+      "command": "npx",
+      "args": ["@t09tanaka/mcp-simple-voicevox"],
+      "env": {
+        "VOICEVOX_API_URL": "http://your-server:50021"
+      }
+    }
+  }
+}
+```
+
+Claude Code CLI からの登録例：
+
+```bash
+claude mcp add voicevox -- npx @t09tanaka/mcp-simple-voicevox
+
+# 環境変数付き
+claude mcp add voicevox -e VOICEVOX_API_URL=http://your-server:50021 -- npx @t09tanaka/mcp-simple-voicevox
+```
+
 #### 方法2: 直接パス指定
 
 ##### macOS/Linux の場合

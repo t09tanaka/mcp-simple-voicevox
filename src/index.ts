@@ -8,7 +8,8 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { VoicevoxClient } from './voicevox-client.js';
 
-const VOICEVOX_ENDPOINT = 'http://localhost:50021';
+const VOICEVOX_ENDPOINT =
+  process.env.VOICEVOX_API_URL ?? 'http://localhost:50021';
 
 class VoicevoxMCPServer {
   private server: Server;
