@@ -69,7 +69,9 @@ Claude Codeが自動的に以下のパラメータで`speak`ツールを呼び�
 ```json
 {
   "text": "こんにちは、テストです",
-  "speaker": 1
+  "speaker": 1,
+  "speedScale": 1.3,
+  "async": true
 }
 ```
 

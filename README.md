@@ -73,6 +73,7 @@ MCP クライアント（Claude Code 等）で以下のツールが利用でき�
 - `text` (string, 必須): 読み上げるテキスト
 - `speaker` (number, 必須): 話者 ID
 - `speedScale` (number, オプション): 読み上げ速度のスケール（0.5〜2.0、デフォルト: 1.0）
+- `async` (boolean, オプション): 非同期再生モード（trueの場合、音声再生の完了を待たずに即座にレスポンスを返します。デフォルト: false）
 
 **使用例:**
 
@@ -80,7 +81,8 @@ MCP クライアント（Claude Code 等）で以下のツールが利用でき�
 {
   \"text\": \"こんにちは、これはテスト音声です。\",
   \"speaker\": 1,
-  \"speedScale\": 1.3
+  \"speedScale\": 1.3,
+  \"async\": true
 }
 ```
 
