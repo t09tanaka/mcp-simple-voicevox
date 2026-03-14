@@ -55,6 +55,11 @@ class VoicevoxMCPServer {
                   minimum: 0.5,
                   maximum: 2.0,
                 },
+                async: {
+                  type: 'boolean',
+                  description:
+                    '非同期再生モード（trueの場合、音声再生の完了を待たずに即座にレスポンスを返します。デフォルトfalse）',
+                },
               },
               required: ['text', 'speaker'],
             },
@@ -66,19 +71,31 @@ class VoicevoxMCPServer {
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
       if (request.params.name === 'speak') {
         try {
-          const { text, speaker, speedScale } = request.params.arguments as {
+          const {
+            text,
+            speaker,
+            speedScale,
+            async: isAsync,
+          } = request.params.arguments as {
             text: string;
             speaker: number;
             speedScale?: number;
+            async?: boolean;
           };
 
-          await this.voicevoxClient.speak(text, speaker, speedScale);
+          if (isAsync) {
+            this.voicevoxClient
+              .speak(text, speaker, speedScale)
+              .catch((e) => console.error(e));
+          } else {
+            await this.voicevoxClient.speak(text, speaker, speedScale);
+          }
 
           return {
             content: [
               {
                 type: 'text',
-                text: '音声の読み上げが完了しました',
+                text: 'おしゃべり完了',
               },
             ],
           };
