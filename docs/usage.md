@@ -1,14 +1,20 @@
 # MCPクライアントからの使用方法
 
-## Claude Codeでの設定
+## MCPクライアントでの設定
 
 ### 1. MCPサーバーとして登録
 
-Claude CodeでMCP-VOICEVOXサーバーを使用するには、設定ファイルに追加する必要があります。
+MCPクライアント（Claude Code、Claude Desktop等）の設定ファイルに以下を追加してください。
 
-#### 方法1: npxを使用（推奨）
+#### macOS / Linux / WSL の場合
 
-`~/.claude_desktop/config.json` ファイルを編集：
+Claude Code CLI:
+
+```bash
+claude mcp add voicevox -- npx @t09tanaka/mcp-simple-voicevox
+```
+
+JSON設定ファイル:
 
 ```json
 {
@@ -21,29 +27,22 @@ Claude CodeでMCP-VOICEVOXサーバーを使用するには、設定ファイル
 }
 ```
 
-#### 方法2: 直接パス指定
+#### Windows（ネイティブ）の場合
 
-##### macOS/Linux の場合
+Claude Code CLI:
 
-```json
-{
-  "mcpServers": {
-    "voicevox": {
-      "command": "node",
-      "args": ["/path/to/mcp-voicevox/dist/index.js"]
-    }
-  }
-}
+```bash
+claude mcp add voicevox -- cmd /c npx @t09tanaka/mcp-simple-voicevox
 ```
 
-##### Windows の場合
+JSON設定ファイル:
 
 ```json
 {
   "mcpServers": {
     "voicevox": {
-      "command": "node",
-      "args": ["C:\\path\\to\\mcp-voicevox\\dist\\index.js"]
+      "command": "cmd",
+      "args": ["/c", "npx", "@t09tanaka/mcp-simple-voicevox"]
     }
   }
 }
@@ -53,18 +52,10 @@ Claude CodeでMCP-VOICEVOXサーバーを使用するには、設定ファイル
 
 - VOICEVOXエンジンが起動している（`http://localhost:50021`）
 - Node.js がインストールされている
-- **方法1の場合**: プロジェクトで `npm link` が実行済み
-- **方法2の場合**: mcp-voicevoxプロジェクトがビルド済み（`npm run build`）
 
-### 3. Claude Codeでの使用
+### 3. 使用例
 
-Claude Codeを再起動後、以下のように`speak`ツールが利用できます：
-
-```
-VOICEVOXで「こんにちは、テストです」を話者ID 1で読み上げてください。
-```
-
-Claude Codeが自動的に以下のパラメータで`speak`ツールを呼び出します：
+MCPクライアントを再起動後、`speak`ツールが利用できます。
 
 ```json
 {
