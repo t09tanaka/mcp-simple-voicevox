@@ -14,66 +14,46 @@ MCP (Model Context Protocol) を通じて VOICEVOX のテキスト読み上げ�
   - VOICEVOX を起動し、エンジンが `http://localhost:50021` で稼働していることを確認
   - 別のホストで稼働している VOICEVOX エンジンを使用する場合は、環境変数 `VOICEVOX_API_URL` でエンドポイントを指定できます（例: `http://your-server:50021`）
 
-## インストール
-
-### npm からインストール（推奨）
-
-```bash
-npm install -g @t09tanaka/mcp-simple-voicevox
-```
-
-### ソースからインストール
-
-```bash
-# リポジトリをクローン
-git clone https://github.com/t09tanaka/mcp-simple-voicevox.git
-
-# 依存関係をインストール
-npm install
-
-# ビルド
-npm run build
-
-# グローバルリンク（オプション）
-npm link
-```
-
 ## 使用方法
 
-### MCP サーバーとして起動
+MCP クライアント（Claude Code、Claude Desktop 等）の設定ファイルに以下を追加してください。
 
-#### 方法 1: npm パッケージから実行（推奨）
-
-```bash
-# グローバルインストール後
-mcp-simple-voicevox
-
-# または npx で直接実行
-npx @t09tanaka/mcp-simple-voicevox
-```
-
-#### 方法 2: ソースから直接実行
+#### macOS / Linux / WSL
 
 ```bash
-# プロジェクトディレクトリで
-npm start
-```
-
-### MCP クライアントから利用
-
-MCP クライアント（Claude Code 等）で以下のツールが利用できます。
-
-#### Claude Code での設定例
-
-```bash
-# 基本（ローカルの VOICEVOX エンジンを使用）
 claude mcp add voicevox -- npx @t09tanaka/mcp-simple-voicevox
-
-# リモートの VOICEVOX エンジンを使用する場合
-claude mcp add voicevox -e VOICEVOX_API_URL=http://your-server:50021 -- npx @t09tanaka/mcp-simple-voicevox
 ```
 
-**設定方法の詳細は [docs/usage.md](docs/usage.md) を参照してください。**
+```json
+{
+  "mcpServers": {
+    "voicevox": {
+      "command": "npx",
+      "args": ["@t09tanaka/mcp-simple-voicevox"]
+    }
+  }
+}
+```
+
+#### Windows（ネイティブ）
+
+```bash
+claude mcp add voicevox -- cmd /c npx @t09tanaka/mcp-simple-voicevox
+```
+
+```json
+{
+  "mcpServers": {
+    "voicevox": {
+      "command": "cmd",
+      "args": ["/c", "npx", "@t09tanaka/mcp-simple-voicevox"]
+    }
+  }
+}
+```
+
+リモートの VOICEVOX エンジンを使用する場合は、環境変数 `VOICEVOX_API_URL` でエンドポイントを指定できます。
+詳細は [docs/usage.md](docs/usage.md) を参照してください。
 
 #### `speak` ツール
 
@@ -111,26 +91,6 @@ curl http://localhost:50021/speakers
 - 8: 春日部つむぎ（ノーマル）
 - 10: 雨晴はう（ノーマル）
 
-## 開発
-
-### 開発モード
-
-```bash
-npm run dev
-```
-
-### リント
-
-```bash
-npm run lint
-```
-
-### テスト
-
-```bash
-npm test
-```
-
 ## 対応プラットフォーム
 
 音声再生は以下のプラットフォームに対応しています：
@@ -147,6 +107,11 @@ npm test
 - `http://localhost:50021` で VOICEVOX API が利用可能か確認
 - `VOICEVOX_API_URL` を設定している場合は、指定したエンドポイントが正しいか確認
 - ファイアウォールの設定を確認
+
+### Windows で "Connection closed" エラーが発生する
+
+- Windows（ネイティブ）では `npx` を直接実行できないため、`cmd /c` 経由で実行する必要があります
+- 上記の「Windows（ネイティブ）」の設定例を参照してください
 
 ### 音声が再生されない
 
