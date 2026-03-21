@@ -58,7 +58,7 @@ class VoicevoxMCPServer {
                 async: {
                   type: 'boolean',
                   description:
-                    '非同期再生モード（trueの場合、音声再生の完了を待たずに即座にレスポンスを返します。デフォルトfalse）',
+                    '非同期再生モード（falseの場合、音声再生の完了を待ちます。デフォルトtrue）',
                 },
               },
               required: ['text', 'speaker'],
@@ -75,7 +75,7 @@ class VoicevoxMCPServer {
             text,
             speaker,
             speedScale,
-            async: isAsync,
+            async: isAsync = true,
           } = request.params.arguments as {
             text: string;
             speaker: number;
