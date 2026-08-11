@@ -62,6 +62,7 @@ claude mcp add voicevox -- cmd /c npx @t09tanaka/mcp-simple-voicevox
 - `text` (string, 必須): 読み上げるテキスト
 - `speaker` (number, 必須): 話者 ID
 - `speedScale` (number, オプション): 読み上げ速度のスケール（0.5〜2.0、デフォルト: 1.0）
+- `volumeScale` (number, オプション): 音量のスケール（0.0〜2.0、デフォルト: 1.0）
 - `async` (boolean, オプション): 非同期再生モード（falseの場合、音声再生の完了を待ちます。デフォルト: true）
 
 **使用例:**
@@ -71,6 +72,7 @@ claude mcp add voicevox -- cmd /c npx @t09tanaka/mcp-simple-voicevox
   \"text\": \"こんにちは、これはテスト音声です。\",
   \"speaker\": 1,
   \"speedScale\": 1.3,
+  \"volumeScale\": 1.5,
   \"async\": true
 }
 ```

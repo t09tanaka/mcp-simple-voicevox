@@ -55,6 +55,12 @@ class VoicevoxMCPServer {
                   minimum: 0.5,
                   maximum: 2.0,
                 },
+                volumeScale: {
+                  type: 'number',
+                  description: '音量のスケール（デフォルト1.0）',
+                  minimum: 0.0,
+                  maximum: 2.0,
+                },
                 async: {
                   type: 'boolean',
                   description:
@@ -75,20 +81,27 @@ class VoicevoxMCPServer {
             text,
             speaker,
             speedScale,
+            volumeScale,
             async: isAsync = true,
           } = request.params.arguments as {
             text: string;
             speaker: number;
             speedScale?: number;
+            volumeScale?: number;
             async?: boolean;
           };
 
           if (isAsync) {
             this.voicevoxClient
-              .speak(text, speaker, speedScale)
+              .speak(text, speaker, speedScale, volumeScale)
               .catch((e) => console.error(e));
           } else {
-            await this.voicevoxClient.speak(text, speaker, speedScale);
+            await this.voicevoxClient.speak(
+              text,
+              speaker,
+              speedScale,
+              volumeScale
+            );
           }
 
           return {

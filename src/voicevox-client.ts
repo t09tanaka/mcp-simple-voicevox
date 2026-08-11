@@ -4,6 +4,7 @@ export interface SpeakOptions {
   text: string;
   speaker: number;
   speedScale?: number;
+  volumeScale?: number;
 }
 
 export class VoicevoxClient {
@@ -19,7 +20,8 @@ export class VoicevoxClient {
   async speak(
     text: string,
     speaker: number,
-    speedScale?: number
+    speedScale?: number,
+    volumeScale?: number
   ): Promise<void> {
     try {
       // 音声クエリの作成
@@ -35,6 +37,11 @@ export class VoicevoxClient {
       // 速度スケールが指定されている場合は設定
       if (speedScale !== undefined) {
         audioQuery.speedScale = speedScale;
+      }
+
+      // 音量スケールが指定されている場合は設定
+      if (volumeScale !== undefined) {
+        audioQuery.volumeScale = volumeScale;
       }
 
       // 音声合成

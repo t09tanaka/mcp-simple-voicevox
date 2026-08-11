@@ -62,6 +62,7 @@ MCPクライアントを再起動後、`speak`ツールが利用できます。
   "text": "こんにちは、テストです",
   "speaker": 1,
   "speedScale": 1.3,
+  "volumeScale": 1.5,
   "async": true
 }
 ```
