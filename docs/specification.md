@@ -17,6 +17,7 @@ VOICEVOXを使用してテキストを音声に変換し、読み上げを行い
 | text         | string  | ✓    | 読み上げるテキスト                                                    |
 | speaker      | number  | ✓    | 話者ID（VOICEVOXの話者番号）                                          |
 | speedScale   | number  |      | 読み上げ速度のスケール（0.5〜2.0、デフォルト: 1.0）                   |
+| volumeScale  | number  |      | 音量のスケール（0.0〜2.0、デフォルト: 1.0）                           |
 | async        | boolean |      | 非同期再生モード（falseの場合、音声再生完了を待つ。デフォルト: true） |
 
 #### 使用例
@@ -26,6 +27,7 @@ VOICEVOXを使用してテキストを音声に変換し、読み上げを行い
   "text": "こんにちは、これはテスト音声です。",
   "speaker": 1,
   "speedScale": 1.3,
+  "volumeScale": 1.5,
   "async": true
 }
 ```
@@ -33,7 +35,7 @@ VOICEVOXを使用してテキストを音声に変換し、読み上げを行い
 #### 処理フロー
 
 1. MCPクライアントから `speak` ツールが呼び出される
-2. パラメータ `text`、`speaker`、オプションで `speedScale`、`async` を受け取る
+2. パラメータ `text`、`speaker`、オプションで `speedScale`、`volumeScale`、`async` を受け取る
 3. VOICEVOXのAPIを使用して音声合成を実行
 4. `async: true`（デフォルト）の場合は音声再生をバックグラウンドで開始し、即座にレスポンスを返却
 5. `async: false` の場合は音声再生完了後にレスポンスを返却

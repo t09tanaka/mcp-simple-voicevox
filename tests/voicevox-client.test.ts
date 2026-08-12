@@ -21,11 +21,13 @@ describe('VoicevoxClient', () => {
         text: 'テスト',
         speaker: 1,
         speedScale: 1.0,
+        volumeScale: 1.0,
       };
 
       expect(typeof options.text).toBe('string');
       expect(typeof options.speaker).toBe('number');
       expect(typeof options.speedScale).toBe('number');
+      expect(typeof options.volumeScale).toBe('number');
     });
   });
 });
